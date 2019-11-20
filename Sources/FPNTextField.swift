@@ -101,7 +101,7 @@ open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
 		setupLeftView()
 		setupCountryPicker()
 
-		keyboardType = .numberPad
+		keyboardType = .phonePad
 		autocorrectionType = .no
 		addTarget(self, action: #selector(didEditText), for: .editingChanged)
 		addTarget(self, action: #selector(displayNumberKeyBoard), for: .touchDown)
@@ -179,7 +179,6 @@ open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
 
 	@objc private func displayNumberKeyBoard() {
 		inputView = nil
-		inputAccessoryView = textFieldInputAccessoryView
 		tintColor = .gray
 		reloadInputViews()
 	}
@@ -197,10 +196,12 @@ open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
 	}
 
 	@objc private func resetKeyBoard() {
-		inputView = nil
-		inputAccessoryView = nil
-		resignFirstResponder()
-	}
+        if inputView == nil {
+            resignFirstResponder()
+        } else {
+            displayNumberKeyBoard()
+        }
+    }
 
 	// - Public
 
